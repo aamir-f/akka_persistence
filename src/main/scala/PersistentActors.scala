@@ -31,6 +31,7 @@ object PersistentActors extends App {
        * 3. we update the actor's state when the event has persisted.
        */
         log.info(s"Received invoice for amount: $amount")
+
         val event = InvoiceRecorded(latestInvoiceId, recipient, data, amount) //sent to journal
         persist(event) /**time gap: all other messages send to this actor are stashed**/{ e =>
           //safe to access mutable state here, taken care of akka-persistence, it makes sure no other thread access actor during a callback
